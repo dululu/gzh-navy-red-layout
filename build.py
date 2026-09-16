@@ -31,6 +31,9 @@ FONT = ("'PingFang SC NEW',system-ui,-apple-system,BlinkMacSystemFont,"
         "'Helvetica Neue','Hiragino Sans GB','Microsoft YaHei UI','Microsoft YaHei',"
         "Arial,sans-serif")
 
+# 分隔条显示宽度（%）。100 = 与正文同宽；62 = 收窄，视觉更含蓄（2026-09-17 定）
+DIVIDER_WIDTH = 62
+
 # 正文段落样式（除 margin / text-align 外全部继承容器）
 P = 'margin:0 16px;'
 PC = 'margin:0 16px;text-align:center;'          # 居中：署名、END 后两句
@@ -63,8 +66,9 @@ def build(plain=False):
     def img(key, alt=""):
         if plain:
             src[key] = "assets/" + IMG[key]
-        return ('<p style="%s"><img src="%s" alt="%s" style="max-width:100%%;'
-                'height:auto;display:block;margin:0 auto;"></p>' % (PI, src[key], alt))
+        return ('<p style="%s"><img src="%s" alt="%s" style="width:%d%%;'
+                'max-width:100%%;height:auto;display:block;margin:0 auto;"></p>'
+                % (PI, src[key], alt, DIVIDER_WIDTH))
 
     def p(text):
         return '<p style="%s">%s</p>' % (P, text)

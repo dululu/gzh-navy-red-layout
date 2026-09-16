@@ -18,8 +18,11 @@
 | 层级行 | 藏蓝 **#1F4E6E** + 加粗，**字号不变，仍是 15px** |
 | 强调 | 橙红 **#FF4C00** + 加粗，只用于人名/关键词首现 |
 | 居中 | 仅三类：署名、END 后两句收尾语、图片；其余正文一律左对齐 |
-| 分隔条 | 2160×540（4:1），文内以 100% 宽显示 |
+| 章节分隔条 | 2160×340（**6.35:1**），文内全宽 → 渲染 **645×102** |
+| THE END 条 | 2160×161（**13.42:1**），文内全宽 → 渲染 **645×48** |
 | 头图 | 1800×766（2.35:1），放正文最上方、署名之前 |
+
+> 分隔条原本是 2160×540（4:1），在 645px 列宽下渲染高 **161px ≈ 6 行正文**，章头压得太重；END 条更浪费——内容只占原画布 12%，上下 474px 全是空白。现在改成上图比例，三条章头各省 59px、END 省 113px。改比例的脚本见 `tools/make_separators.py`。
 
 ---
 
@@ -30,10 +33,26 @@ index.html            自包含可复制版 —— 4 张分隔条已 base64 内�
 index.relative.html   可读版 —— 图片走 assets/ 相对路径，方便看源码和改结构
 layout-spec.md        排版规范：实测数值、层级规则、图文序列、不要继承的坑
 build.py              生成脚本：python3 build.py 重新生成上面两个 HTML
-assets/               4 张分隔条 PNG 原图（主图，2160×540）
+tools/make_separators.py  分隔条比例调整：--head / --end-band / --restore
+assets/               4 张分隔条 PNG（已改成 6.35:1 / 13.42:1）
+assets/original-4x1/  原始 4:1 版本，随时可还原
 ```
 
 `index.html` 与 `index.relative.html` 都由 `build.py` 生成，**改结构请改 `build.py`，不要直接改 HTML**。
+
+## 调整分隔条比例
+
+```bash
+python3 tools/make_separators.py --head 340 --end-band 161   # 当前用的比例
+python3 tools/make_separators.py --head 540                  # 回到 4:1 的高度感
+python3 tools/make_separators.py --restore                   # 完全还原原始 4:1
+python3 build.py && python3 build.py --plain                 # 改完重新生成 HTML
+```
+
+两种处理方式不同，**不要混**：
+
+- **章头条（壹/贰/叁）**：图形本身占满画布，**不能裁**。变扁只能「把内容等比缩小 → 贴到更扁的画布上居中」，所以比例 = 新画布宽高比，两侧会有留白。
+- **END 条**：内容是居中的一条细带，直接裁掉上下留白即可，不缩放。
 
 ---
 

@@ -36,6 +36,7 @@
 index.html            自包含可复制版 —— 4 张分隔条已 base64 内嵌，浏览器打开 → 全选复制 → 粘进公众号
 index.relative.html   可读版 —— 图片走 assets/ 相对路径，方便看源码和改结构
 layout-spec.md        排版规范：实测数值、层级规则、图文序列、不要继承的坑
+compare-divider-ratios.html  分隔条比例四选一决策存档（静态记录，2026-09-17 定案采用 ④）
 build.py              生成脚本：python3 build.py 重新生成上面两个 HTML
 tools/make_separators.py  分隔条比例调整：--head / --end-band / --restore
 assets/               4 张分隔条 PNG（已改成 6.35:1 / 13.42:1）
@@ -65,6 +66,8 @@ DIVIDER_WIDTH = 62   # 100 = 与正文同宽；62 = 收窄（当前）
 
 - **章头条（壹/贰/叁）**：图形本身占满画布，**不能裁**。变扁只能「把内容等比缩小 → 贴到更扁的画布上居中」，所以比例 = 新画布宽高比，两侧会有留白。
 - **END 条**：内容是居中的一条细带，直接裁掉上下留白即可，不缩放。
+
+> 当时比较了四档（原始全宽 / 只收宽度 / 只改扁 / 改扁＋收窄），最终采用第 ④ 档。四档的真实尺寸对照与判定依据存档在 [`compare-divider-ratios.html`](compare-divider-ratios.html)，包含已弃用的方案，便于日后回溯。
 
 ---
 

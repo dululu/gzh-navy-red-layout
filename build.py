@@ -34,6 +34,10 @@ FONT = ("'PingFang SC NEW',system-ui,-apple-system,BlinkMacSystemFont,"
 # 分隔条显示宽度（%）。100 = 与正文同宽；62 = 收窄，视觉更含蓄（2026-09-17 定）
 DIVIDER_WIDTH = 62
 
+# 尾部分隔条之后的两句收尾语。用户 2026-09-17 定：保留并居中。
+# 要临时去掉（例如某篇想拿掉转发引导），改成 False 后重新生成即可。
+WITH_FOOTER = True
+
 # 正文段落样式（除 margin / text-align 外全部继承容器）
 P = 'margin:0 16px;'
 PC = 'margin:0 16px;text-align:center;'          # 居中：署名、END 后两句
@@ -155,9 +159,10 @@ def build(plain=False):
     a('<p style="%s"><strong>【结尾升维句】一个人在成长路上能为热爱留一方天地，'
       '并把它走成脚下的路，这件事本身就值得被看见。</strong></p>' % P)
     a(img("end", "THE END"))
-    a(pc("原创不易，感谢有你！"))
-    a(gap())
-    a(pc("一起转发出去，让更多人看到。"))
+    if WITH_FOOTER:
+        a(pc("原创不易，感谢有你！"))
+        a(gap())
+        a(pc("一起转发出去，让更多人看到。"))
 
     body = "\n\n  ".join(b)
     doc = """<!DOCTYPE html>

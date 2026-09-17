@@ -54,9 +54,15 @@ def data_uri(name):
 
 
 def head_img(name):
-    """头图槽位：模板不预置图片，用注释标出位置。"""
+    """头图槽位：模板不预置图片，用注释标出位置。
+
+    推荐用技能 gzh-display-cover 生成（1800×766 / 2.35:1，在成稿目录下
+    建 封面/ 放 cover.txt + build.sh，跑 bash build.sh 就出图）。
+    同一张图既上传公众号当推文头图，也插到下面这个槽位里。
+    产线示例：06-成稿/<篇名>/封面/ 与 build_article.py 里的 cover()。
+    """
     return ('<!-- 【头图】2.35:1（1800×766），放在「作者 | 小铭」之前，'
-            '不缩进、居中。把你的图插到这一行下面 -->')
+            '不缩进、居中。用 gzh-display-cover 出图后插到这一行下面 -->')
 
 
 def photo_slot():
@@ -187,7 +193,8 @@ def build(plain=False):
   居中    署名 + END 后两句收尾语 + 图片；其余正文左对齐
 
   用法：浏览器打开 → 全选复制 → 粘进公众号编辑器 → 替换【】里的内容
-  图片已 base64 内嵌，复制时不会丢；头图与人物图需你自己插入
+  图片已 base64 内嵌，复制时不会丢；人物图需你自己插入
+  头图用技能 gzh-display-cover 生成（1800×766 / 2.35:1），插到槽位注释下面
   ============================================================
 -->
 <section style="max-width:677px;margin:0 auto;background:#ffffff;font-family:%s;font-size:15px;letter-spacing:0.544px;line-height:1.75em;color:#595959;padding-bottom:40px;">
